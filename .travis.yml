@@ -8,4 +8,4 @@ script:
   - git config --global user.name "Travis CI"
   - git add .
   - git commit -m "Travis Build ${TRAVIS_BUILD_NUMBER}"
-  - git push https://clownvary:${GITHUB_TOKEN}@${GH_REF} HEAD:master
+  - git push https://crazyuploader:${GITHUB_TOKEN}@${GH_REF} HEAD:master
