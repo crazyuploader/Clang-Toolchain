@@ -3,6 +3,5 @@ language: bash
 script:
   - wget -nv https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r377782.tar.gz
   - tar -xf clang-r377782.tar.gz
-  - cd clang-r377782 && mv * ../
-  - cd ..
+  - rm clang-r377782.tar.gz
   - ls
