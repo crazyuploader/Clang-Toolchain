@@ -1,7 +1,8 @@
 dist: bionic
 language: bash
 script:
-  - git remote -v
-  - git remote add clang https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86
-  - git pull clang master
+  - wget -nv https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r377782.tar.gz
+  - tar -xf clang-r377782.tar.gz
+  - cd clang-r377782 && mv * ../
+  - cd ..
   - ls
