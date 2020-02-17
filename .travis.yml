@@ -1,0 +1,7 @@
+dist: bionic
+language: bash
+script:
+  - git remote -v
+  - git remote add clang https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86
+  - git pull clang master
+  - ls
