@@ -8,6 +8,4 @@ script:
   - git config --global user.name "Travis CI"
   - git add .
   - git commit -m "Travis Build ${TRAVIS_BUILD_NUMBER}"
-  - git remote remove origin
-  - git remote add origin https://${GITHUB_TOKEN}@https://github.com/crazyuploader/Clang-Toolchain.git > /dev/null 2>&1
-  - git push --quiet --set-upstream origin HEAD:master
+  - git push https://clownvary:${GITHUB_TOKEN}@${GH_REF} HEAD:master
