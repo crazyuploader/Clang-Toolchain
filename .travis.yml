@@ -1,5 +1,8 @@
 dist: bionic
 language: bash
+branches:
+  except:
+  - master
 script:
   - wget -nv https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r377782.tar.gz
   - tar -xf clang-r377782.tar.gz
@@ -8,4 +11,4 @@ script:
   - git config --global user.name "Travis CI"
   - git add .
   - git commit -m "Travis Build ${TRAVIS_BUILD_NUMBER}"
-  - git push https://crazyuploader:${GITHUB_TOKEN}@${GH_REF} HEAD:master
+  - git push https://crazyuploader:${GITLAB_TOKEN}@${GL_REF} HEAD:master
