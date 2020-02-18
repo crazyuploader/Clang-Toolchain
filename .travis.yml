@@ -4,6 +4,9 @@ branches:
   except:
   - master
 script:
+  - git remote remove origin
+  - git remote add origin https://${GL_REF}
+  - git pull origin master
   - wget -nv https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r377782.tar.gz
   - tar -xf clang-r377782.tar.gz
   - rm clang-r377782.tar.gz
