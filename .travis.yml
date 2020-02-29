@@ -3,7 +3,7 @@ language: bash
 before_script:
   - sudo apt-get update
   - sudo apt-get upgrade -y && sudo apt-get -y autoremove
-  - sudo apt-get install bc \
+  - sudo apt-get install -y bc \
             bison \
             ca-certificates \
             ccache \
@@ -22,7 +22,8 @@ before_script:
             python3 \
             texinfo \
             u-boot-tools \
-            zlib1g-dev
+            zlib1g-dev \
+            lld
 script:
   - git clone https://github.com/ClangBuiltLinux/tc-build.git TC
   - cd TC/
