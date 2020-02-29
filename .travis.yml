@@ -2,28 +2,9 @@ dist: bionic
 language: bash
 before_script:
   - sudo apt-get update
-  - sudo apt-get upgrade -y && sudo apt-get -y autoremove
-  - sudo apt-get install -y bc \
-            bison \
-            ca-certificates \
-            ccache \
-            clang \
-            cmake \
-            curl \
-            file \
-            flex \
-            gcc \
-            g++ \
-            git \
-            libelf-dev \
-            libssl-dev \
-            make \
-            ninja-build \
-            python3 \
-            texinfo \
-            u-boot-tools \
-            zlib1g-dev \
-            lld
+  - sudo apt-get upgrade -y
+  - sudo apt-get -y autoremove
+  - sudo apt-get install -y bc bison ca-certificates ccache clang cmake curl file flex gcc g++ git libelf-dev libssl-dev make ninja-build python3 texinfo u-boot-tools zlib1g-dev lld
 script:
   - git clone https://github.com/ClangBuiltLinux/tc-build.git TC
   - cd TC/
