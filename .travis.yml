@@ -3,7 +3,7 @@ language: bash
 before_script:
   - sudo apt-get update
   - sudo apt-get upgrade -y && sudo apt-get -y autoremove
-  - apt install bc \
+  - sudo apt-get install bc \
             bison \
             ca-certificates \
             ccache \
