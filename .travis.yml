@@ -1,17 +1,29 @@
 dist: bionic
 language: bash
-branches:
-  except:
-  - master
+before_script:
+  - sudo apt-get update
+  - sudo apt-get upgrade -y && sudo apt-get -y autoremove
+  - apt install bc \
+            bison \
+            ca-certificates \
+            ccache \
+            clang \
+            cmake \
+            curl \
+            file \
+            flex \
+            gcc \
+            g++ \
+            git \
+            libelf-dev \
+            libssl-dev \
+            make \
+            ninja-build \
+            python3 \
+            texinfo \
+            u-boot-tools \
+            zlib1g-dev
 script:
-  - git remote remove origin
-  - git remote add origin https://${GL_REF}
-  - git pull origin master
-  - wget -nv https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r377782.tar.gz
-  - tar -xf clang-r377782.tar.gz
-  - rm clang-r377782.tar.gz
-  - git config --global user.email "travis@travis-ci.com"
-  - git config --global user.name "Travis CI"
-  - git add .
-  - git commit -m "Travis Build ${TRAVIS_BUILD_NUMBER}"
-  - git push https://crazyuploader:${GITLAB_TOKEN}@${GL_REF} HEAD:master
+  - git clone https://github.com/ClangBuiltLinux/tc-build.git TC
+  - cd TC/
+  - ./build-llvm.py
