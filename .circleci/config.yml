@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: "ubuntu:latest"
+    steps:
+      - run:
+          name: Installing Prerequisite
+          command: 'apt-get update && apt-get -y upgrade && apt-get install -y bc bison ca-certificates ccache clang cmake curl file flex gcc g++ git libelf-dev libssl-dev make ninja-build python3 texinfo u-boot-tools zlib1g-dev lld'
+      - run:
+          name: Running Speedtest
+          command: 'curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
+      - run:
+          name: Building Clang
+          command: 'git clone https://github.com/ClangBuiltLinux/tc-build.git TC && cd TC/ && ./build-llvm.py'
