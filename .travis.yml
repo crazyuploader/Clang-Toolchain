@@ -5,4 +5,9 @@ before_script:
   - sudo apt-get -y install wget tar git
   - export clang_dir="clang-r377782c"
 script:
-  - echo "${clang_dir}"
+  - git clone --depth=1 https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 Clang
+  - cd Clang
+  - mv clang-r377782c/ ../
+  - cd ..
+  - mv clang-r377782c/ clang/
+  - ls -1
