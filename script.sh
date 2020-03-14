@@ -16,7 +16,7 @@ cd clang || exit
 echo ""
 echo "Getting Clang AOSP Toolchain From Google"
 echo ""
-wget -nv https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/"${clang_ver}".tar.gz>> /dev/null 2>&1
+wget -nv ${TOOL_LINK}>> /dev/null 2>&1
 exit_code="$(echo $?)"
 if [[ ${exit_code} != "0" ]]; then
     echo -e "${RED}Invalid Link, Exiting${NC}"
@@ -24,10 +24,11 @@ if [[ ${exit_code} != "0" ]]; then
 else
     echo -e "${YELLOW}Link OK${NC}"
 fi
-tar -xf "${clang_ver}".tar.gz
-rm "${clang_ver}".tar.gz
+TAR="$(ls *.tar.gz)"
+tar -xf "${TAR}"
+rm "${TAR}"
 echo ""
-echo "Version: $(./bin/clang --version)"
+echo -e "${GREEN}Version:${NC} $(./bin/clang --version)"
 
 # Setting Git Identity
 git config --global user.email "travis@travis-ci.com"
