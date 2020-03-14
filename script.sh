@@ -26,6 +26,8 @@ else
 fi
 tar -xf "${clang_ver}".tar.gz
 rm "${clang_ver}".tar.gz
+echo ""
+echo "Version: $(./bin/clang --version)"
 
 # Setting Git Identity
 git config --global user.email "travis@travis-ci.com"
@@ -41,6 +43,4 @@ else
     git push https://crazyuploader:"${GITLAB_TOKEN}"@"${GL_REF}" HEAD:master
     echo ""
     echo -e "${GREEN}Clang Toolchain Pushed${NC}"
-    echo ""
-    echo "Version: $(./bin/clang --version)"
 fi
