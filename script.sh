@@ -23,7 +23,6 @@ if [[ ${exit_code} != "0" ]]; then
     exit 1
 else
     echo -e "${YELLOW}Link OK${NC}"
-    echo ""
 fi
 tar -xf "${clang_ver}".tar.gz
 rm "${clang_ver}".tar.gz
