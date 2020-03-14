@@ -13,6 +13,7 @@ git clone https://"${GL_REF}" -b master clang
 cd clang || exit
 
 # Downloading latest Clang AOSP Toolchain from Google
+echo ""
 echo "Getting Clang AOSP Toolchain From Google"
 echo ""
 wget -nv https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/"${clang_ver}".tar.gz>> /dev/null 2>&1
