@@ -13,8 +13,10 @@ git clone https://"${GL_REF}" -b master clang
 cd clang || exit
 
 # Downloading latest Clang AOSP Toolchain from Google
+echo "Getting Clang AOSP Toolchain From Google"
+echo ""
 wget -nv https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/"${clang_ver}".tar.gz>> /dev/null 2>&1
-exit_code="$($?)"
+exit_code="$(echo $?)"
 if [[ ${exit_code} != "0" ]]; then
     echo -e "${RED}Invalid Link, Exiting${NC}"
     exit 1
@@ -37,4 +39,8 @@ else
     echo git add .
     git commit -m "Travis CI Build ${TRAVIS_BUILD_NUMBER}"
     git push https://crazyuploader:"${GITLAB_TOKEN}"@"${GL_REF}" HEAD:master
+    echo ""
+    echo -e "${GREEN}Clang Toolchain Pushed${NC}"
+    echo ""
+    echo "Version: $(./bin/clang --version)"
 fi
