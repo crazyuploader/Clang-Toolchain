@@ -2,8 +2,7 @@ dist: bionic
 language: bash
 before_script:
   - sudo apt-get update
-  - sudo apt-get upgrade -y
-  - sudo apt-get -y autoremove
   - sudo apt-get -y install wget tar git
+  - export clang_dir="clang-r377782c"
 script:
-  - curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
+  - echo "${clang_dir}"
