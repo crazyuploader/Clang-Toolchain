@@ -8,7 +8,7 @@ script:
   - mkdir clang
   - cd clang
   - wget -nv https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/${clang_ver}.tar.gz
-  - tar ${clang_ver}.tar.gz
+  - tar -xf ${clang_ver}.tar.gz
   - rm ${clang_ver}.tar.gz
   - git config --global user.email "travis@travis-ci.com"
   - git config --global user.name "Travis CI"
