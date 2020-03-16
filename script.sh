@@ -12,6 +12,9 @@ YELLOW="\033[1;33m"
 git clone https://"${GL_REF}" -b master clang
 cd clang || exit
 
+# Clean Up
+rm -r ./*
+
 # Downloading latest Clang AOSP Toolchain from Google
 echo ""
 echo "Getting Clang AOSP Toolchain From Google"
@@ -28,7 +31,12 @@ TAR="$(ls *.tar.gz)"
 tar -xf "${TAR}"
 rm "${TAR}"
 echo ""
+CLANG_VERSION="$(./clang --version | grep 'clang version' | cut -c 37-)"
 echo -e "${GREEN}Version:${NC} $(./bin/clang --version)"
+echo ""
+echo "Creating 'README.md'"
+echo ""
+echo -e "# AOSP Clang-Toolchain\n\n<i>Clang Version:</i> ${CLANG_VERSION}">> README.md
 
 # Setting Git Identity
 git config --global user.email "travis@travis-ci.com"
