@@ -35,7 +35,6 @@ CLANG_VERSION="$(./bin/clang --version | grep 'clang version' | cut -c 37-)"
 echo -e "${GREEN}Version:${NC} $(./bin/clang --version)"
 echo ""
 echo "Creating 'README.md'"
-echo ""
 echo -e "# AOSP Clang-Toolchain\n\n<i>Clang Version:</i> ${CLANG_VERSION}">> README.md
 
 # Setting Git Identity
@@ -47,7 +46,7 @@ echo ""
 if [[ -z $(git status --porcelain) ]]; then
     echo -e "${GREEN}Nothing to Commit${NC}"
 else
-    echo git add .
+    git add .
     git commit -m "Travis CI Build ${TRAVIS_BUILD_NUMBER}"
     git push https://crazyuploader:"${GITLAB_TOKEN}"@"${GL_REF}" HEAD:master
     echo ""
