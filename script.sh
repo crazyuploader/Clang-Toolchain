@@ -32,7 +32,7 @@ tar -xf "${TAR}"
 rm "${TAR}"
 echo ""
 CLANG_VERSION="$(./bin/clang --version | grep 'clang version' | cut -c 37-)"
-echo -e "${GREEN}Version:${NC} $(./bin/clang --version)"
+echo -e "${GREEN}Clang-Toolchain Version:${NC} ${CLANG_VERSION}"
 echo ""
 echo "Creating 'README.md'"
 echo -e "# AOSP Clang-Toolchain\n\n***Clang Version:***  ${CLANG_VERSION}">> README.md
