@@ -35,7 +35,7 @@ CLANG_VERSION="$(./bin/clang --version | grep 'clang version' | cut -c 37-)"
 echo -e "${GREEN}Version:${NC} $(./bin/clang --version)"
 echo ""
 echo "Creating 'README.md'"
-echo -e "# AOSP Clang-Toolchain\n\n<i>Clang Version:</i> ${CLANG_VERSION}">> README.md
+echo -e "# AOSP Clang-Toolchain\n\n***Clang Version:***  ${CLANG_VERSION}">> README.md
 
 # Setting Git Identity
 git config --global user.email "travis@travis-ci.com"
