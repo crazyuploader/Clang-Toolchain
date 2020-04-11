@@ -3,6 +3,6 @@ language: bash
 before_script:
   - sudo apt-get update
   - sudo apt-get -y install wget tar git
-  - export TOOL_LINK="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r377782d.tar.gz"
+  - export Android_Toolchain_Repo="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86"
 script:
   - bash script.sh
