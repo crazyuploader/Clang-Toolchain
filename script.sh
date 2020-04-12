@@ -57,9 +57,9 @@ echo ""
 if [[ -z $(git status --porcelain) ]]; then
     echo -e "${GREEN}Nothing to Commit${NC}"
 else
-    # git add .
-    # git commit -m "Travis CI Build ${TRAVIS_BUILD_NUMBER}"
-    # git push https://crazyuploader:"${GITLAB_TOKEN}"@"${GL_REF}" HEAD:master
+    git add .
+    git commit -m "Travis CI Build ${TRAVIS_BUILD_NUMBER}"
+    git push https://crazyuploader:"${GITLAB_TOKEN}"@"${GL_REF}" HEAD:master
     echo ""
-    # echo -e "${GREEN}Clang Toolchain Pushed${NC}"
+    echo -e "${GREEN}Clang Toolchain Pushed${NC}"
 fi
