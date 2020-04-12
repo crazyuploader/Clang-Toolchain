@@ -40,6 +40,7 @@ echo ""
 echo "Getting things ready..."
 echo ""
 mv ${TOOL_NAME}/ ../clang
+cd ..
 cd clang || exit
 CLANG_VERSION="$(./bin/clang --version | grep 'clang version' | cut -c 37-)"
 echo -e "${GREEN}Clang-Toolchain Version:${NC} ${CLANG_VERSION}"
