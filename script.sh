@@ -8,13 +8,8 @@ RED="\033[0;31m"
 GREEN="\033[1;32m"
 YELLOW="\033[1;33m"
 
-# Getting AOSP Clang Toolchain from Google
-git clone --depth=1 "${Android_Toolchain_Repo}" AOSP_REPO
-cd AOSP_REPO || exit
-for f in clang-r*; do
-	echo "${f}"
-done
-
+# Variables
+Android_Toolchain_Repo="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86"
 
 # Getting my Clang Toolchain Repo from GitLab
 git clone https://"${GL_REF}" -b master clang
@@ -22,8 +17,30 @@ cd clang || exit
 
 # Clean Up
 rm -r ./*
+cd ..
 
+# Getting AOSP Clang Toolchain from Google
+git clone --depth=1 "${Android_Toolchain_Repo}" AOSP_REPO
+exit_code="$(echo $?)"
+if [[ ${exit_code} == "0" ]]; then
+	echo ""
+	echo -e "${YELLOW}Clone OK${NC}"
+	cd AOSP_REPO || exit
+else
+	echo -e "${RED}Clone Failure${NC}"
+	exit 1
+fi
+for f in clang-r*; do
+	echo "${f}" >> /dev/null 2>&1
+done
+TOOL_NAME="${f}"
 echo ""
+echo "Choosing AOSP Clang Toolchain ---> ${TOOL_NAME}"
+echo ""
+echo "Getting things ready..."
+echo ""
+mv -r ${TOOL_NAME}/ ../clang
+cd clang || exit
 CLANG_VERSION="$(./bin/clang --version | grep 'clang version' | cut -c 37-)"
 echo -e "${GREEN}Clang-Toolchain Version:${NC} ${CLANG_VERSION}"
 echo ""
