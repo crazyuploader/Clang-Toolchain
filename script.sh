@@ -42,7 +42,7 @@ echo ""
 mv ${TOOL_NAME}/* ../clang
 cd ..
 cd clang || exit
-CLANG_VERSION="$(./bin/clang --version | grep 'clang version' | cut -c 37-)"
+CLANG_VERSION="$(./bin/clang --version)"
 echo -e "${GREEN}Clang-Toolchain Version:${NC} ${CLANG_VERSION}"
 echo ""
 echo "Creating 'README.md'"
