@@ -1,4 +1,5 @@
-dist: bionic
+os: linux
+dist: focal
 language: bash
 before_script:
   - sudo apt-get update
