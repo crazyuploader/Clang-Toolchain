@@ -1,8 +1,5 @@
 os: linux
 dist: focal
 language: bash
-before_script:
-  - sudo apt-get update
-  - sudo apt-get -y install wget tar git
 script:
   - bash script.sh
