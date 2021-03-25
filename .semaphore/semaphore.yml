@@ -1,0 +1,19 @@
+version: v1.0
+name: Weekly Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Clang Toolchain
+    task:
+      jobs:
+        - name: Get Clang & Push to GitLab
+          commands:
+            - checkout
+            - ./script.sh
+      secrets:
+        - name: GITLAB
+      env_vars:
+        - name: GL_RF
+          value: gitlab.com/crazyuploader/clang-toolchain.git
