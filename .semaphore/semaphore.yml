@@ -11,6 +11,6 @@ blocks:
         - name: Get Clang & Push to GitLab
           commands:
             - checkout
-            - ./script.sh
+            - ./script.sh || df -h
       secrets:
         - name: GITLAB
