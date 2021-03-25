@@ -1,10 +1,9 @@
 task:
-  name: Get and Push Clang Toolchain
+  name: bash script.sh
   container:
     image: crazyuploader/minimal_ubuntu:latest
     cpu: 16
     memory: 12G
-    use_in_memory_disk: true
   environment:
     GITLAB_TOKEN: ENCRYPTED[5ecf102bcb11eea408c4eb406c8011c54ca73d7d99e48c25d66116733046752e193c5f1fbc4d64f1b81dacf902bae49d]
-  run_script: bash script.sh
+  script_script: bash script.sh
