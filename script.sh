@@ -50,8 +50,8 @@ echo "Creating 'README.md'"
 echo -e "# AOSP Clang-Toolchain\n\n***Clang Version:***  ${CLANG_VERSION}">> README.md
 
 # Setting Git Identity
-git config --global user.email "travis@travis-ci.com"
-git config --global user.name "Travis CI"
+git config --global user.email "4677226-crazyuploader@users.noreply.gitlab.com"
+git config --global user.name "Jugal Kishore"
 
 # Pushing to GitLab Repo at https://gitlab.com/crazyuploader/clang-toolchain
 echo ""
