@@ -1,2 +1,5 @@
-clang_task:
+container:
+  image: crazyuploader/minimal_ubuntu:latest
+
+task:
   run_script: bash script.sh
