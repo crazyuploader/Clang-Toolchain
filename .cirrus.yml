@@ -1,2 +1,2 @@
-get_clang:
+clang_task:
   run_script: bash script.sh
