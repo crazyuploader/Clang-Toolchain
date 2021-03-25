@@ -10,6 +10,7 @@ YELLOW="\033[1;33m"
 
 # Variables
 Android_Toolchain_Repo="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86"
+GL_REF="gitlab.com/crazyuploader/clang-toolchain.git"
 
 # Getting my Clang Toolchain Repo from GitLab
 git clone https://"${GL_REF}" -b master clang
