@@ -1,2 +1,2 @@
 get_clang:
-  script: bash script.sh
+  run_script: bash script.sh
