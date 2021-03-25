@@ -14,6 +14,3 @@ blocks:
             - ./script.sh
       secrets:
         - name: GITLAB
-      env_vars:
-        - name: GL_RF
-          value: gitlab.com/crazyuploader/clang-toolchain.git
