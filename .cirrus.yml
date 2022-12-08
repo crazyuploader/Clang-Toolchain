@@ -2,7 +2,7 @@ task:
   name: bash script.sh
   container:
     image: crazyuploader/minimal_ubuntu:latest
-    cpu: 8
+    cpu: 4
     memory: 8G
   environment:
     GITLAB_TOKEN: ENCRYPTED[9f94915eab5c30f33fd56319f90552e1e2c14b108556a71bca94b005c08e714e74eb04290a49e84d99c1d42ef8c21219]
