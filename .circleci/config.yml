@@ -1,0 +1,14 @@
+version: 2.1
+jobs:
+  run-script:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          command: bash script.sh
+workflows:
+  run:
+    jobs:
+      - run-script
