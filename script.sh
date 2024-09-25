@@ -14,6 +14,18 @@ GL_REF="gitlab.com/crazyuploader/clang-toolchain.git"
 ROOT_DIR="$(pwd)"
 GIT_LFS_URL="https://github.com/git-lfs/git-lfs/releases/download/v3.5.1/git-lfs-linux-amd64-v3.5.1.tar.gz"
 
+# Function to check if running as root
+is_root() {
+    if [[ "$EUID" -eq 0 ]]; then
+        SUDO=""
+    else
+        SUDO="sudo"
+    fi
+}
+
+# Call the function to set $SUDO
+is_root
+
 # Install Git LFS if not installed
 if ! command -v git-lfs &>/dev/null; then
     echo -e "${YELLOW}Installing Git LFS...${NC}"
@@ -21,7 +33,7 @@ if ! command -v git-lfs &>/dev/null; then
     curl -sLo git-lfs-linux.tar.gz "${GIT_LFS_URL}"
     tar xvf git-lfs-linux.tar.gz
     cd git-lfs-3.5.1 || exit
-    sudo ./install.sh
+    $SUDO ./install.sh
     cd "$ROOT_DIR" || exit
 else
     echo -e "${GREEN}Git LFS already installed${NC}"
