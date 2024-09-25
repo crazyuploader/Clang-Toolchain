@@ -18,7 +18,7 @@ cd /tmp
 curl -sLo git-lfs-linux.tar.gz https://github.com/git-lfs/git-lfs/releases/download/v3.5.1/git-lfs-linux-amd64-v3.5.1.tar.gz
 tar xvf git-lfs-linux.tar.gz
 cd git-lfs-3.5.1
-./install.sh
+sudo ./install.sh
 cd $ROOT_DIR
 
 # Getting my Clang Toolchain Repo from GitLab
