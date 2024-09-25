@@ -11,6 +11,15 @@ YELLOW="\033[1;33m"
 # Variables
 Android_Toolchain_Repo="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86"
 GL_REF="gitlab.com/crazyuploader/clang-toolchain.git"
+ROOT_DIR="$(pwd)"
+
+# Install Git LFS
+cd /tmp
+curl -sLo git-lfs-linux.tar.gz https://github.com/git-lfs/git-lfs/releases/download/v3.5.1/git-lfs-linux-amd64-v3.5.1.tar.gz
+tar xvf git-lfs-linux.tar.gz
+cd git-lfs-*
+./install.sh
+cd $ROOT_DIR
 
 # Getting my Clang Toolchain Repo from GitLab
 git clone https://"${GL_REF}" -b master clang
@@ -49,8 +58,6 @@ echo -e "# AOSP Clang-Toolchain\n\n***Clang Version:***  ${CLANG_VERSION}">> REA
 git config --global user.email "4677226-crazyuploader@users.noreply.gitlab.com"
 git config --global user.name "Jugal Kishore"
 
-# Install Git LFS
-git lfs install
 git lfs track "*.so"
 git lfs track "bin/clang-*"
 
