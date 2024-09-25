@@ -12,67 +12,74 @@ YELLOW="\033[1;33m"
 Android_Toolchain_Repo="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86"
 GL_REF="gitlab.com/crazyuploader/clang-toolchain.git"
 ROOT_DIR="$(pwd)"
+GIT_LFS_URL="https://github.com/git-lfs/git-lfs/releases/download/v3.5.1/git-lfs-linux-amd64-v3.5.1.tar.gz"
 
-# Install Git LFS
-cd /tmp
-curl -sLo git-lfs-linux.tar.gz https://github.com/git-lfs/git-lfs/releases/download/v3.5.1/git-lfs-linux-amd64-v3.5.1.tar.gz
-tar xvf git-lfs-linux.tar.gz
-cd git-lfs-3.5.1
-sudo ./install.sh
-cd $ROOT_DIR
-
-# Getting my Clang Toolchain Repo from GitLab
-git clone https://"${GL_REF}" -b master clang
-cd clang || exit
-
-# Getting AOSP Clang Toolchain from Google
-git clone --depth=1 "${Android_Toolchain_Repo}" AOSP_REPO
-exit_code="$(echo $?)"
-if [[ ${exit_code} == "0" ]]; then
-	echo ""
-	echo -e "${YELLOW}Clone OK${NC}"
-	cd AOSP_REPO || exit
+# Install Git LFS if not installed
+if ! command -v git-lfs &>/dev/null; then
+    echo -e "${YELLOW}Installing Git LFS...${NC}"
+    cd /tmp || exit
+    curl -sLo git-lfs-linux.tar.gz "${GIT_LFS_URL}"
+    tar xvf git-lfs-linux.tar.gz
+    cd git-lfs-3.5.1 || exit
+    sudo ./install.sh
+    cd "$ROOT_DIR" || exit
 else
-	echo -e "${RED}Clone Failure${NC}"
-	exit 1
+    echo -e "${GREEN}Git LFS already installed${NC}"
 fi
-for f in clang-r*; do
-	echo "${f}" >> /dev/null 2>&1
-done
-TOOL_NAME="${f}"
-echo ""
-echo "Choosing AOSP Clang Toolchain ---> ${TOOL_NAME}"
-echo ""
-echo "Getting things ready..."
-echo ""
-mv ${TOOL_NAME}/* ../clang
-cd ..
+
+# Clone Clang Toolchain Repo from GitLab
+echo -e "${YELLOW}Cloning GitLab Clang Toolchain Repo...${NC}"
+git clone "https://${GL_REF}" -b master clang || { echo -e "${RED}GitLab clone failed${NC}"; exit 1; }
 cd clang || exit
+
+# Clone AOSP Clang Toolchain from Google
+echo -e "${YELLOW}Cloning AOSP Clang Toolchain from Google...${NC}"
+git clone --depth=1 "${Android_Toolchain_Repo}" AOSP_REPO || { echo -e "${RED}Google clone failed${NC}"; exit 1; }
+echo -e "${GREEN}Clone successful${NC}"
+
+# Find toolchain folder
+TOOL_NAME=$(find AOSP_REPO -type d -name 'clang-r*' -print -quit)
+if [[ -z "${TOOL_NAME}" ]]; then
+    echo -e "${RED}No Clang Toolchain found${NC}"
+    exit 1
+fi
+echo -e "${YELLOW}Using AOSP Clang Toolchain: ${TOOL_NAME}${NC}"
+
+# Move toolchain to clang directory
+echo -e "${YELLOW}Moving toolchain...${NC}"
+mv "${TOOL_NAME}"/* ./ || exit
+rm -rf AOSP_REPO
+
+# Display Clang version
 CLANG_VERSION="$(./bin/clang --version)"
 echo -e "${GREEN}Clang-Toolchain Version:${NC} ${CLANG_VERSION}"
-echo ""
-echo "Creating 'README.md'"
-echo -e "# AOSP Clang-Toolchain\n\n***Clang Version:***  ${CLANG_VERSION}">> README.md
 
-# Setting Git Identity
+# Create README.md with Clang version
+echo -e "# AOSP Clang-Toolchain\n\n***Clang Version:***  ${CLANG_VERSION}" > README.md
+echo -e "${GREEN}README.md created${NC}"
+
+# Configure Git identity
+echo -e "${YELLOW}Setting Git identity...${NC}"
 git config --global user.email "4677226-crazyuploader@users.noreply.gitlab.com"
 git config --global user.name "Jugal Kishore"
 
-# Install Git LFS
+# Setup Git LFS
+echo -e "${YELLOW}Setting up Git LFS...${NC}"
 git lfs install
 git lfs track "*.so"
 git lfs track "bin/clang-*"
 
-# Pushing to GitLab Repo at https://gitlab.com/crazyuploader/clang-toolchain
-echo ""
+# Push changes if any
 if [[ -z $(git status --porcelain) ]]; then
     echo -e "${GREEN}Nothing to Commit${NC}"
 else
     git add .
     git commit -m "CI Build"
-    if [[ -z ${GITLAB_TOKEN} ]]; then
-    	git push https://crazyuploader:"${GITLAB_TOKEN}"@"${GL_REF}" HEAD:master
-    	echo ""
-    	echo -e "${GREEN}Clang Toolchain Pushed${NC}"
-     fi
+    if [[ -n ${GITLAB_TOKEN} ]]; then
+        git push "https://${GITLAB_TOKEN}@${GL_REF}" HEAD:master
+        echo -e "${GREEN}Clang Toolchain Pushed${NC}"
+    else
+        echo -e "${RED}GITLAB_TOKEN not set. Cannot push changes.${NC}"
+        exit 1
+    fi
 fi
