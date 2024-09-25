@@ -53,6 +53,11 @@ echo -e "# AOSP Clang-Toolchain\n\n***Clang Version:***  ${CLANG_VERSION}">> REA
 git config --global user.email "4677226-crazyuploader@users.noreply.gitlab.com"
 git config --global user.name "Jugal Kishore"
 
+# Install Git LFS
+git install lfs
+git lfs track "*.so"
+git lfs track "bin/clang-*"
+
 # Pushing to GitLab Repo at https://gitlab.com/crazyuploader/clang-toolchain
 echo ""
 if [[ -z $(git status --porcelain) ]]; then
