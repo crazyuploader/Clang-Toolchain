@@ -54,7 +54,7 @@ git config --global user.email "4677226-crazyuploader@users.noreply.gitlab.com"
 git config --global user.name "Jugal Kishore"
 
 # Install Git LFS
-git install lfs
+git lfs install
 git lfs track "*.so"
 git lfs track "bin/clang-*"
 
