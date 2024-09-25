@@ -44,6 +44,10 @@ echo -e "${YELLOW}Cloning GitLab Clang Toolchain Repo...${NC}"
 git clone "https://${GL_REF}" -b master clang || { echo -e "${RED}GitLab clone failed${NC}"; exit 1; }
 cd clang || exit
 
+# Clean Up
+rm -r ./*
+cd ..
+
 # Clone AOSP Clang Toolchain from Google
 echo -e "${YELLOW}Cloning AOSP Clang Toolchain from Google...${NC}"
 git clone --depth=1 "${Android_Toolchain_Repo}" AOSP_REPO || { echo -e "${RED}Google clone failed${NC}"; exit 1; }
