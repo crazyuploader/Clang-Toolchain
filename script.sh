@@ -16,10 +16,6 @@ GL_REF="gitlab.com/crazyuploader/clang-toolchain.git"
 git clone https://"${GL_REF}" -b master clang
 cd clang || exit
 
-# Clean Up
-rm -r ./*
-cd ..
-
 # Getting AOSP Clang Toolchain from Google
 git clone --depth=1 "${Android_Toolchain_Repo}" AOSP_REPO
 exit_code="$(echo $?)"
@@ -65,7 +61,9 @@ if [[ -z $(git status --porcelain) ]]; then
 else
     git add .
     git commit -m "CI Build"
-    git push https://crazyuploader:"${GITLAB_TOKEN}"@"${GL_REF}" HEAD:master
-    echo ""
-    echo -e "${GREEN}Clang Toolchain Pushed${NC}"
+    if [[ -z ${GITLAB_TOKEN} ]]; then
+    	git push https://crazyuploader:"${GITLAB_TOKEN}"@"${GL_REF}" HEAD:master
+    	echo ""
+    	echo -e "${GREEN}Clang Toolchain Pushed${NC}"
+     fi
 fi
