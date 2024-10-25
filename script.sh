@@ -13,6 +13,7 @@ Android_Toolchain_Repo="https://android.googlesource.com/platform/prebuilts/clan
 GL_REF="gitlab.com/crazyuploader/clang-toolchain.git"
 ROOT_DIR="$(pwd)"
 GIT_LFS_URL="https://github.com/git-lfs/git-lfs/releases/download/v3.5.1/git-lfs-linux-amd64-v3.5.1.tar.gz"
+MIN_SIZE_MB=90 # Set the minimum size for Git LFS tracking (in MB)
 
 # Function to check if running as root
 is_root() {
@@ -89,8 +90,9 @@ git config --global user.name "Jugal Kishore"
 # Setup Git LFS
 echo -e "${YELLOW}Setting up Git LFS...${NC}"
 git lfs install
-git lfs track "*.so"
-git lfs track "bin/clang-*"
+
+# Track files larger than specified size with Git LFS
+find . -type f -size +"${MIN_SIZE_MB}M" ! -path "./.git/*" -exec git lfs track {} \;
 
 # Push changes if any
 if [[ -z $(git status --porcelain) ]]; then
