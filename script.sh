@@ -16,11 +16,11 @@ GIT_LFS_URL="https://github.com/git-lfs/git-lfs/releases/download/v3.5.1/git-lfs
 
 # Function to check if running as root
 is_root() {
-    if [[ "$EUID" -eq 0 ]]; then
-        SUDO=""
-    else
-        SUDO="sudo"
-    fi
+	if [[ "$EUID" -eq 0 ]]; then
+		SUDO=""
+	else
+		SUDO="sudo"
+	fi
 }
 
 # Call the function to set $SUDO
@@ -28,20 +28,23 @@ is_root
 
 # Install Git LFS if not installed
 if ! command -v git-lfs &>/dev/null; then
-    echo -e "${YELLOW}Installing Git LFS...${NC}"
-    cd /tmp || exit
-    curl -sLo git-lfs-linux.tar.gz "${GIT_LFS_URL}"
-    tar xvf git-lfs-linux.tar.gz
-    cd git-lfs-3.5.1 || exit
-    $SUDO ./install.sh
-    cd "$ROOT_DIR" || exit
+	echo -e "${YELLOW}Installing Git LFS...${NC}"
+	cd /tmp || exit
+	curl -sLo git-lfs-linux.tar.gz "${GIT_LFS_URL}"
+	tar xvf git-lfs-linux.tar.gz
+	cd git-lfs-3.5.1 || exit
+	$SUDO ./install.sh
+	cd "$ROOT_DIR" || exit
 else
-    echo -e "${GREEN}Git LFS already installed${NC}"
+	echo -e "${GREEN}Git LFS already installed${NC}"
 fi
 
 # Clone Clang Toolchain Repo from GitLab
 echo -e "${YELLOW}Cloning GitLab Clang Toolchain Repo...${NC}"
-git clone "https://${GL_REF}" -b master clang || { echo -e "${RED}GitLab clone failed${NC}"; exit 1; }
+git clone "https://${GL_REF}" -b master clang || {
+	echo -e "${RED}GitLab clone failed${NC}"
+	exit 1
+}
 cd clang || exit
 
 # Clean Up
@@ -50,28 +53,32 @@ cd ..
 
 # Clone AOSP Clang Toolchain from Google
 echo -e "${YELLOW}Cloning AOSP Clang Toolchain from Google...${NC}"
-git clone --depth=1 "${Android_Toolchain_Repo}" AOSP_REPO || { echo -e "${RED}Google clone failed${NC}"; exit 1; }
+git clone --depth=1 "${Android_Toolchain_Repo}" AOSP_REPO || {
+	echo -e "${RED}Google clone failed${NC}"
+	exit 1
+}
 echo -e "${GREEN}Clone successful${NC}"
 
 # Find toolchain folder
 TOOL_NAME=$(find AOSP_REPO -type d -name 'clang-r*' -print -quit)
 if [[ -z "${TOOL_NAME}" ]]; then
-    echo -e "${RED}No Clang Toolchain found${NC}"
-    exit 1
+	echo -e "${RED}No Clang Toolchain found${NC}"
+	exit 1
 fi
 echo -e "${YELLOW}Using AOSP Clang Toolchain: ${TOOL_NAME}${NC}"
 
 # Move toolchain to clang directory
 echo -e "${YELLOW}Moving toolchain...${NC}"
-mv "${TOOL_NAME}"/* ./ || exit
+mv "${TOOL_NAME}"/* ./clang || exit
 rm -rf AOSP_REPO
+cd clang || exit
 
 # Display Clang version
 CLANG_VERSION="$(./bin/clang --version)"
 echo -e "${GREEN}Clang-Toolchain Version:${NC} ${CLANG_VERSION}"
 
 # Create README.md with Clang version
-echo -e "# AOSP Clang-Toolchain\n\n***Clang Version:***  ${CLANG_VERSION}" > README.md
+echo -e "# AOSP Clang-Toolchain\n\n***Clang Version:***  ${CLANG_VERSION}" >README.md
 echo -e "${GREEN}README.md created${NC}"
 
 # Configure Git identity
@@ -87,16 +94,16 @@ git lfs track "bin/clang-*"
 
 # Push changes if any
 if [[ -z $(git status --porcelain) ]]; then
-    echo -e "${GREEN}Nothing to Commit${NC}"
+	echo -e "${GREEN}Nothing to Commit${NC}"
 else
-    git add .
-    git commit -m "CI Build"
-    if [[ -n ${GITLAB_TOKEN-} ]]; then
-        git remote set-url origin "https://${GITLAB_TOKEN}@${GL_REF}"
-        git push origin HEAD:master
-        echo -e "${GREEN}Clang Toolchain Pushed${NC}"
-    else
-        echo -e "${RED}GITLAB_TOKEN not set. Cannot push changes.${NC}"
-        exit 1
-    fi
+	git add .
+	git commit -m "CI Build"
+	if [[ -n ${GITLAB_TOKEN-} ]]; then
+		git remote set-url origin "https://${GITLAB_TOKEN}@${GL_REF}"
+		git push origin HEAD:master
+		echo -e "${GREEN}Clang Toolchain Pushed${NC}"
+	else
+		echo -e "${RED}GITLAB_TOKEN not set. Cannot push changes.${NC}"
+		exit 0
+	fi
 fi
