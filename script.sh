@@ -99,7 +99,7 @@ if [[ -z $(git status --porcelain) ]]; then
 	echo -e "${GREEN}Nothing to Commit${NC}"
 else
 	git add .
-	git commit -m "CI Build"
+	git commit -m "Circle CI - Build Number: ${CIRCLE_BUILD_NUM}"
 	if [[ -n ${GITLAB_TOKEN-} ]]; then
  		git remote remove origin
 		git remote add origin "https://oauth2:${GITLAB_TOKEN}@${GL_REF}"
