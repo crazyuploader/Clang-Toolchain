@@ -5,5 +5,5 @@ task:
     cpu: 8
     memory: 8G
   environment:
-    GITLAB_TOKEN: ENCRYPTED[76adf94a811f346bbb338b27e1829023577d60086db03ed77cb0ee8efc1d99ecfb7262ce1f191661584801cda3f128bd]
+    GITLAB_TOKEN: ENCRYPTED[94da4b52fd206ca1f4a5a45e6458558c1702e96d40c538178cb2e6088b68f87f143d92798971cd786397f97049ecd1a8]
   script_script: bash script.sh
