@@ -101,6 +101,7 @@ else
 	git add .
 	git commit -m "CI Build"
 	if [[ -n ${GITLAB_TOKEN-} ]]; then
+ 		git remote remove origin
 		git remote add origin "https://oauth2:${GITLAB_TOKEN}@${GL_REF}"
 		git push origin HEAD:master
 		echo -e "${GREEN}Clang Toolchain Pushed${NC}"
