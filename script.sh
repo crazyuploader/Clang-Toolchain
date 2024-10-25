@@ -91,8 +91,9 @@ if [[ -z $(git status --porcelain) ]]; then
 else
     git add .
     git commit -m "CI Build"
-    if [[ -n ${GITLAB_TOKEN} ]]; then
-        git push "https://${GITLAB_TOKEN}@${GL_REF}" HEAD:master
+    if [[ -n ${GITLAB_TOKEN-} ]]; then
+        git remote set-url origin "https://${GITLAB_TOKEN}@${GL_REF}"
+        git push origin HEAD:master
         echo -e "${GREEN}Clang Toolchain Pushed${NC}"
     else
         echo -e "${RED}GITLAB_TOKEN not set. Cannot push changes.${NC}"
