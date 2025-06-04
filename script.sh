@@ -12,7 +12,7 @@ YELLOW="\033[1;33m"
 Android_Toolchain_Repo="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86"
 GL_REF="gitlab.com/crazyuploader/clang-toolchain.git"
 ROOT_DIR="$(pwd)"
-GIT_LFS_URL="https://github.com/git-lfs/git-lfs/releases/download/v3.5.1/git-lfs-linux-amd64-v3.5.1.tar.gz"
+GIT_LFS_URL="https://github.com/git-lfs/git-lfs/releases/download/v3.6.1/git-lfs-linux-amd64-v3.6.1.tar.gz"
 MIN_SIZE_MB=90 # Set the minimum size for Git LFS tracking (in MB)
 
 # Function to check if running as root
