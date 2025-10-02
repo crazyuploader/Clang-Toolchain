@@ -30,7 +30,7 @@ if [[ -z "${GITLAB_TOKEN}" ]]; then
     exit 1
 fi
 
-API_CODE=$(curl -s -o /dev/null -w "%{http_code}" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "https://gitlab.com/api/v4/user")
+API_CODE=$(curl -s -o /dev/null -w "%{http_code}" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "https://gitlab.com/api/v4/projects/crazyuploader%2Fclang-toolchain/repository/branches")
 if [[ "${API_CODE}" != "200" ]]; then
     echo -e "${RED}Invalid GITLAB_TOKEN. Aborting.${NC}"
     exit 1
