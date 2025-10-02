@@ -24,6 +24,19 @@ is_root() {
 	fi
 }
 
+# Verify GITLAB_TOKEN
+if [[ -z "${GITLAB_TOKEN}" ]]; then
+    echo -e "${RED}GITLAB_TOKEN is not set. Aborting.${NC}"
+    exit 1
+fi
+
+API_CODE=$(curl -s -o /dev/null -w "%{http_code}" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "https://gitlab.com/api/v4/user")
+if [[ "${API_CODE}" != "200" ]]; then
+    echo -e "${RED}Invalid GITLAB_TOKEN. Aborting.${NC}"
+    exit 1
+fi
+echo -e "${GREEN}GITLAB_TOKEN is valid.${NC}"
+
 # Call the function to set $SUDO
 is_root
 
